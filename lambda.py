@@ -1,3 +1,6 @@
+# Python script for the first lambda function used to serialize image data.
+
+
 import json
 import boto3
 import base64
@@ -32,7 +35,8 @@ def lambda_handler(event, context):
         }
     }
 
-
+# -----------------------------------------------------------------------------
+# Pyhon script for the second lambda function used for classification and passing the inferences back to Step Function
 
 import json
 #import sagemaker
@@ -68,10 +72,13 @@ def lambda_handler(event, context):
         'body':event
     }
 
-
-
+#-------------------------------------------------------------------------------
+# Pyhon script for the third lambda function used for filtering inferences that do/don't pass the threshold.
 
 import json
+import base64
+import boto3
+
 
 THRESHOLD = .88
 
@@ -83,8 +90,6 @@ def lambda_handler(event, context):
     #inferences = json.loads(event['body']['inferences']) if type(event['body']['inferences']) == str else event['body']['inferences']
     print(inferences)
     meets_threshold = (max(inferences)> THRESHOLD)
-    
-    # If our threshold is met, pass our data back out of the
 
     # Step Function, else, end the Step Function with an error
 
